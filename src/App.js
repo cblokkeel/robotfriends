@@ -1,16 +1,23 @@
 import React from 'react';
 import './App.css';
 import CardList from './CardList';
-import { robots } from './robots';
 import SearchBox from './SearchBox';
 
 class App extends React.Component {
     constructor() {
         super()
         this.state = {
-            robots: robots,
+            robots: [],
             searchfield: ''
         }
+    }
+
+    componentDidMount() {
+        fetch('http://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(users => {
+                this.setState({ robots: users })
+            })
     }
 
     searchBoxChange = e => {
